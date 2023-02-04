@@ -63,6 +63,9 @@
     }
   },
   "lint-staged": {
-    "src/*.{js,jsx}": "npm run lint"
+    "src/*.{js,jsx}": [
+      "npm run lint:fix",
+      "git add"
+    ]
   }
 }
