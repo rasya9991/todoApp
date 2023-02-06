@@ -69,7 +69,7 @@ class Task extends Component {
             onBlur={this.hideInput}
           />
         </form>
-        <label className={'label'}>
+        <label className={'label'} onClick={makeDone}>
           <button className={buttonClass}></button>
           <span className={textClass} onClick={makeDone}>
             {label}
