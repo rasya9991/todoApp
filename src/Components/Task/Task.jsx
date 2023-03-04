@@ -2,9 +2,16 @@ import React, { Component } from 'react'
 import './Task.css'
 import { formatDistanceToNow } from 'date-fns'
 class Task extends Component {
+  getPadTime = (time) => {
+    return time.toString().padStart(2, '0')
+  }
   state = {
     label: '',
     inputHide: false,
+    min: this.getPadTime(this.props.min),
+    sec: this.getPadTime(this.props.sec),
+    shouldTimerWork: true,
+    timerId: 0,
   }
 
   hideInput = (e) => {
@@ -20,9 +27,8 @@ class Task extends Component {
     e.preventDefault()
 
     this.setState(() => {
-      console.log('he')
-
       return {
+        shouldTimerWork: true,
         inputHide: true,
       }
     })
@@ -32,6 +38,17 @@ class Task extends Component {
     this.setState({
       label: this.props.label,
     })
+    const timer = setInterval(() => {
+      this.setState(({ min, sec, shouldTimerWork }) => {
+        if (shouldTimerWork) {
+          return {
+            timerId: timer,
+            min: sec === 0 ? this.getPadTime(min - 1) : min,
+            sec: sec > 0 ? this.getPadTime(sec - 1) : min > 0 ? 59 : 0,
+          }
+        }
+      })
+    }, 1000)
   }
 
   render() {
@@ -71,10 +88,15 @@ class Task extends Component {
         </form>
         <label className={'label'} onClick={makeDone}>
           <button className={buttonClass}></button>
-          <span className={textClass} onClick={makeDone}>
-            {label}
-          </span>
-          <span className={'hello'}>{formatDistanceToNow(time)}</span>
+          <div className="test">
+            <span className={textClass} onClick={makeDone}>
+              {label}
+            </span>
+            <span className={'hello'}>{formatDistanceToNow(time)}</span>
+          </div>
+          <div className="time-info">
+            <div className="timer">{`${this.state.min}:${this.state.sec}`}</div>
+          </div>
         </label>
 
         <div className="buttons">
@@ -86,6 +108,24 @@ class Task extends Component {
           </button>
           <button className={'tasklist-item__button button__delete'} onClick={onDeleted}>
             <span className={'fa fa-trash-o'}></span>
+          </button>
+          <button
+            onClick={() => {
+              this.setState({
+                shouldTimerWork: false,
+              })
+            }}
+          >
+            stop
+          </button>
+          <button
+            onClick={() => {
+              this.setState({
+                shouldTimerWork: true,
+              })
+            }}
+          >
+            start
           </button>
         </div>
       </div>

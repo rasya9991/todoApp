@@ -17,9 +17,12 @@ class App extends Component {
       }, throttleTime)
     }
   }
-  createItem = (label) => {
+  createItem = (state) => {
+    const { label, min, sec } = state
     return {
       label,
+      min,
+      sec,
       important: false,
       done: false,
       hide: false,
@@ -165,8 +168,9 @@ class App extends Component {
     })
   }
 
-  addItems = (text) => {
-    let newItem = this.createItem(text)
+  addItems = (state) => {
+    // const {label : text,min,sec} = state
+    let newItem = this.createItem(state)
     this.setState(({ todos }) => {
       let fanArr = JSON.parse(JSON.stringify(todos))
       const newArr = [...fanArr, newItem]

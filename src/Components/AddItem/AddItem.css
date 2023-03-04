@@ -5,7 +5,7 @@
     box-shadow: 0px 0px 3px 0.1px rgba(0, 0, 0, 0.2);
 }
 .add-text{
-    width: 400px;
+    width: 100%;
     font-size: 25px;
     border: 1px solid grey;
 }
@@ -17,4 +17,12 @@
 .button-add:hover{
     background-color: #222;
     color: white;
+}
+.timer{
+    display: flex;
+    width: auto;
+}
+.inputs{
+    margin: 0;
+    padding: 0;
 }
