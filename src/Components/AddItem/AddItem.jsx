@@ -23,7 +23,8 @@ class AddItem extends Component {
   };
   onSubmit = (e) => {
     e.preventDefault();
-    if (this.state.label.match(/[\w]/) && this.state.min.match(/[\d]/) && this.state.sec.match(/[\d]/)) {
+    console.log(this.state.sec)
+    if (this.state.label.match(/[\w]/) ) {
       this.props.addItem(this.state);
       this.setState({
         label: '',

@@ -3,8 +3,8 @@ import './Task.css';
 import { formatDistanceToNow } from 'date-fns';
 class Task extends Component {
   getPadTime = (time) => {
-    return time.toString().padStart(2, '0');
-  };
+    return time.toString().padStart(2, '0')
+  }
   state = {
     label: '',
     inputHide: false,
@@ -12,64 +12,64 @@ class Task extends Component {
     sec: this.getPadTime(this.props.sec),
     shouldTimerWork: true,
     timerId: 0,
-  };
+  }
 
   hideInput = (e) => {
-    e.preventDefault();
-    this.props.onLabelChange(this.state.label);
+    e.preventDefault()
+    this.props.onLabelChange(this.state.label)
     this.setState(() => {
       return {
         inputHide: false,
-      };
-    });
-  };
+      }
+    })
+  }
   showInput = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     this.setState(() => {
       return {
         shouldTimerWork: true,
         inputHide: true,
-      };
-    });
-  };
+      }
+    })
+  }
 
   componentDidMount() {
     this.setState({
       label: this.props.label,
-    });
+    })
     const timer = setInterval(() => {
       this.setState(({ min, sec, shouldTimerWork }) => {
         if (shouldTimerWork) {
           return {
             timerId: timer,
-            min: sec === 0 ? this.getPadTime(min - 1) : min,
+            min: sec === 0 && min>0 ? this.getPadTime(min - 1) : min,
             sec: sec > 0 ? this.getPadTime(sec - 1) : min > 0 ? 59 : 0,
-          };
+          }
         }
-      });
-    }, 1000);
+      })
+    }, 1000)
   }
 
   render() {
-    const { onDeleted, makeDone, makeImportant, done, important, hide, time } = this.props;
-    const { label, inputHide } = this.state;
-    let divClass = 'tasklist-item';
-    let textClass = 'tasklist-item__text';
-    let buttonClass = 'tasklist-item__button button__select';
-    let inputClass = 'input2';
+    const { onDeleted, makeDone, makeImportant, done, important, hide, time } = this.props
+    const { label, inputHide } = this.state
+    let divClass = 'tasklist-item'
+    let textClass = 'tasklist-item__text'
+    let buttonClass = 'tasklist-item__button button__select'
+    let inputClass = 'input2'
     if (done) {
-      textClass += ' done';
-      buttonClass += ' button--done';
+      textClass += ' done'
+      buttonClass += ' button--done'
     }
     if (important) {
-      textClass += ' important';
+      textClass += ' important'
     }
     if (hide) {
-      divClass += ' hide';
+      divClass += ' hide'
     }
     if (!inputHide) {
-      inputClass += ' hide';
+      inputClass += ' hide'
     }
     return (
       <div className={divClass}>
@@ -81,7 +81,7 @@ class Task extends Component {
             onChange={(e) => {
               this.setState({
                 label: e.target.value,
-              });
+              })
             }}
             onBlur={this.hideInput}
           />
@@ -113,7 +113,7 @@ class Task extends Component {
             onClick={() => {
               this.setState({
                 shouldTimerWork: false,
-              });
+              })
             }}
           >
             stop
@@ -122,14 +122,14 @@ class Task extends Component {
             onClick={() => {
               this.setState({
                 shouldTimerWork: true,
-              });
+              })
             }}
           >
             start
           </button>
         </div>
       </div>
-    );
+    )
   }
 }
 
