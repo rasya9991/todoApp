@@ -1,20 +1,19 @@
 html {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 *,
 *::after,
 *::before {
-    box-sizing: inherit;
+  box-sizing: inherit;
 }
 
-body{
-    background-color: #EAEAEA;
+body {
+  background-color: #eaeaea;
 }
 
-.App{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-

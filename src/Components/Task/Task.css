@@ -1,118 +1,112 @@
-.tasklist-item__text{
-    list-style: none;
-    align-self: start;
-    font-size: 25px;
-    margin-left: 5px;
+.tasklist-item__text {
+  list-style: none;
+  align-self: start;
+  font-size: 25px;
+  margin-left: 5px;
 }
-.tasklist-item__text.done{
-    text-decoration: line-through;
+.tasklist-item__text.done {
+  text-decoration: line-through;
 }
-.tasklist-item__text.important{
-    font-weight: bold;
-    color: steelblue;
-}
-
-.buttons{
-    display: flex;
-    margin-left: auto;
-    gap:5px;
-}
-.hide{
-    display: none !important;
-}
-.tasklist-item{
-    display: flex;
-    position: relative;
-    background-color: #EAEAEA;
-    width: 400px;
-    height: 80px;
-    box-shadow: 0px 0px 3px 0.1px rgba(0, 0, 0, 0.2);
-    padding: 15px;
-}
-.hello{
-    font-size: 14px;
-    margin-left: auto;
-    margin-right: 5px;
-    opacity: 0.8;
-}
-.label{
-    display: flex;
-    gap: 3px;
-    align-items: center;
-    width: 280px;
-}
-.fa.fa-trash-o{
-    transform: scale(1.2);
-    color: #a61b1b;
-
-
-}
-.fa.fa-star-o{
-    transform: scale(1.2);
-    color: #28a61b;
-
-}
-.fa.fa-pencil{
-    color:grey
-}
-.input2{
-
-    position: absolute;
-    left: 0;
-    right:0;
-    bottom: 0;
-    top: 0;
-    z-index: 2;
+.tasklist-item__text.important {
+  font-weight: bold;
+  color: steelblue;
 }
 
-.tasklist-item__button{
-    align-self: center;
-    width: 25px;
-    height: 25px;
-    background-color: transparent;
-    border: 1px solid grey;
-    border-radius: 5px;
-    transition: transform 0.1s linear;
-    cursor: pointer;
+.buttons {
+  display: flex;
+  margin-left: auto;
+  gap: 5px;
 }
-.button__select{
-    border-radius: 50%;
-    cursor: default;
+.hide {
+  display: none !important;
 }
-.button__select.button--done{
-    border: 1px solid #28a61b;
-    background-color: #28a61b;
-    cursor: default;
+.tasklist-item {
+  display: flex;
+  position: relative;
+  background-color: #eaeaea;
+  width: 400px;
+  height: 80px;
+  box-shadow: 0px 0px 3px 0.1px rgba(0, 0, 0, 0.2);
+  padding: 15px;
 }
-.button--done:before{
-    content: "✔";
-    color: white;
-    display: block;
+.hello {
+  font-size: 14px;
+  margin-left: auto;
+  margin-right: 5px;
+  opacity: 0.8;
+}
+.label {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  width: 280px;
+}
+.fa.fa-trash-o {
+  transform: scale(1.2);
+  color: #a61b1b;
+}
+.fa.fa-star-o {
+  transform: scale(1.2);
+  color: #28a61b;
+}
+.fa.fa-pencil {
+  color: grey;
+}
+.input2 {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 2;
+}
 
+.tasklist-item__button {
+  align-self: center;
+  width: 25px;
+  height: 25px;
+  background-color: transparent;
+  border: 1px solid grey;
+  border-radius: 5px;
+  transition: transform 0.1s linear;
+  cursor: pointer;
 }
-.button__important{
-    position: relative;
-    border:1px solid #28a61b;
+.button__select {
+  border-radius: 50%;
+  cursor: default;
+}
+.button__select.button--done {
+  border: 1px solid #28a61b;
+  background-color: #28a61b;
+  cursor: default;
+}
+.button--done:before {
+  content: '✔';
+  color: white;
+  display: block;
+}
+.button__important {
+  position: relative;
+  border: 1px solid #28a61b;
 }
 
-
-.button__delete{
-    border: 1px solid #a61b1b;
+.button__delete {
+  border: 1px solid #a61b1b;
 }
-.tasklist-item__button:hover{
-    transform: scale(1.1);
+.tasklist-item__button:hover {
+  transform: scale(1.1);
 }
-.time-info{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-left: auto;
+.time-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: auto;
 }
-.timer{
-    justify-content: center;
+.timer {
+  justify-content: center;
 }
-.test{
-    display: flex;
-    flex-direction: column;
-    align-content: start;
+.test {
+  display: flex;
+  flex-direction: column;
+  align-content: start;
 }

@@ -23,12 +23,12 @@ class AddItem extends Component {
   }
   onSubmit = (e) => {
     e.preventDefault()
-    if (this.state.label.match(/[\w]/)) {
+    if (this.state.label.match(/[\w]/) && this.state.min.match(/[\d]/) && this.state.sec.match(/[\d]/)) {
       this.props.addItem(this.state)
       this.setState({
         label: '',
       })
-    } else alert('Вы пытаетесь добавить пустое событие')
+    } else alert('Вы пытаетесь не верное')
   }
   render() {
     return (
