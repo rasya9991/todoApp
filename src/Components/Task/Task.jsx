@@ -44,7 +44,7 @@ class Task extends Component {
           return {
             timerId: timer,
             min: sec === 0 && min>0 ? this.getPadTime(min - 1) : min,
-            sec: sec > 0 ? this.getPadTime(sec - 1) : min > 0 ? 59 : 0,
+            sec: sec > 0 ? this.getPadTime(sec - 1) : min > 0 ? 59 : this.getPadTime(0),
           }
         }
       })
