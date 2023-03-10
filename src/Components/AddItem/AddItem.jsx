@@ -1,58 +1,46 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './AddItem.css';
-class AddItem extends Component {
-  state = {
-    label: '',
-    min: 0,
-    sec: 0,
+const AddItem = (props) => {
+  const [label,setLabel] = useState('')
+  const [min,setMin] = useState(0)
+  const [sec,setSec] = useState(0)
+
+  const onLableChange = (e) => {
+    setLabel(e.target.value)
   };
-  onLableChange = (e) => {
-    this.setState({
-      label: e.target.value,
-    });
+  const onMinChange = (e) => {
+    setMin(e.target.value)
   };
-  onMinChange = (e) => {
-    this.setState({
-      min: e.target.value,
-    });
+  const onSecChange = (e) => {
+    setSec(e.target.value)
   };
-  onSecChange = (e) => {
-    this.setState({
-      sec: e.target.value,
-    });
-  };
-  onSubmit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.sec)
-    if (this.state.label.match(/[\w]/) ) {
-      this.props.addItem(this.state);
-      this.setState({
-        label: '',
-      });
+    if (label.match(/[\w]/) ) {
+      props.addItem({label,min,sec});
+      setLabel('')
     } else alert('Вы пытаетесь не верное');
   };
-  render() {
     return (
-      <form className={'add'} onSubmit={this.onSubmit}>
+      <form className={'add'} onSubmit={onSubmit}>
         <div className="inputs">
           <input
             className={'add-text'}
             type="text"
             placeholder={'Add new item...'}
-            onChange={this.onLableChange}
-            value={this.state.label}
+            onChange={onLableChange}
+            value={label}
           />
           <div className="timer">
             <div className="">min</div>
-            <input type="text" placeholder={'min'} value={this.state.min} onChange={this.onMinChange} />
+            <input type="text" placeholder={'min'} value={min} onChange={onMinChange} />
             <div className="">sec</div>
-            <input type="text" value={this.state.sec} placeholder={'sec'} onChange={this.onSecChange} />
+            <input type="text" value={sec} placeholder={'sec'} onChange={onSecChange} />
           </div>
         </div>
         <button className={'button-add'}>Add new item</button>
       </form>
     );
-  }
 }
 
 export default AddItem;

@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Task from '../Task/Task';
 import './Tasklist.css';
-class Tasklist extends Component {
-  render() {
-    const { todos, onDeleted, makeDone, makeImportant, labelChange } = this.props;
+const Tasklist = (props) => {
+    const { todos, onDeleted, makeDone, makeImportant, labelChange } = props;
 
     const elements = todos.map((item) => {
       const { id, ...itemProps } = item;
@@ -25,7 +24,6 @@ class Tasklist extends Component {
       );
     });
     return <ul className={'tasklist'}>{elements}</ul>;
-  }
 }
 
 export default Tasklist;

@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './Deals.css';
-class Deals extends Component {
-  render() {
-    const { left, onActive, onCompleted, onAll, onCelar } = this.props;
+const Deals = (props) => {
+    const { left, onActive, onCompleted, onAll, onCelar } = props;
 
     let defaultFilterBtn = 'filter-button';
     let defaultFilterBtnAll = 'filter-button';
@@ -47,7 +46,6 @@ class Deals extends Component {
         </label>
       </div>
     );
-  }
 }
 
 export default Deals;
