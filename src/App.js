@@ -1,208 +1,1 @@
-import React, { Component } from 'react'
-
-import './style.css'
-import Title from './Components/Title/Title'
-import Search from './Components/Search/Search'
-import Tasklist from './Components/Tasklist/Tasklist'
-import Deals from './Components/Deals/Deals'
-import AddItem from './Components/AddItem/AddItem'
-
-class App extends Component {
-  debounce = (fn, throttleTime) => {
-    let timer
-    return function (...args) {
-      clearTimeout(timer)
-      timer = setTimeout(() => {
-        fn.apply(this, args)
-      }, throttleTime)
-    }
-  }
-  createItem = (label) => {
-    return {
-      label,
-      important: false,
-      done: false,
-      hide: false,
-      time: Date.now(),
-      id: this.ids++,
-    }
-  }
-  ids = 0
-  state = {
-    todos: [],
-  }
-
-  onInputChange = (id, label) => {
-    this.setState(({ todos }) => {
-      const newArr = JSON.parse(JSON.stringify(todos))
-      const result = []
-      newArr.forEach((el) => {
-        if (el.id == id) {
-          el.label = label
-          result.push(el)
-        } else {
-          result.push(el)
-        }
-      })
-      return {
-        todos: result,
-      }
-    })
-  }
-  makeDone = (id) => {
-    this.setState(({ todos }) => {
-      const idx = todos.findIndex((el) => {
-        return el.id == id
-      })
-      const oldItem = todos[idx]
-      const newItem = { ...oldItem, done: !oldItem.done }
-      let newArr = [...todos.slice(0, idx), newItem, ...todos.slice(idx + 1)]
-
-      return {
-        todos: newArr,
-      }
-    })
-  }
-
-  makeImportant = (id) => {
-    this.setState(({ todos }) => {
-      const idx = todos.findIndex((el) => {
-        return el.id == id
-      })
-      const oldItem = todos[idx]
-      const newItem = { ...oldItem, important: !oldItem.important }
-      let newArr = [...todos.slice(0, idx), newItem, ...todos.slice(idx + 1)]
-
-      return {
-        todos: newArr,
-      }
-    })
-  }
-  deleteItem = (id) => {
-    this.setState(({ todos }) => {
-      const result = todos.filter((el) => {
-        return el.id !== id
-      })
-      return {
-        todos: result,
-      }
-    })
-  }
-  activeItems = () => {
-    this.setState(({ todos }) => {
-      const newArr = JSON.parse(JSON.stringify(todos))
-      newArr.map((el) => {
-        el.hide = false
-        if (el.done) {
-          el.hide = true
-        }
-      })
-
-      return {
-        todos: newArr,
-      }
-    })
-  }
-  allItems = () => {
-    this.setState(({ todos }) => {
-      const newArr = JSON.parse(JSON.stringify(todos))
-      newArr.map((el) => {
-        el.hide = false
-      })
-      return {
-        todos: newArr,
-      }
-    })
-  }
-
-  completedItems = () => {
-    this.setState(({ todos }) => {
-      const newArr = JSON.parse(JSON.stringify(todos))
-      newArr.map((el) => {
-        el.hide = false
-        if (!el.done) {
-          el.hide = true
-        }
-      })
-      return {
-        todos: newArr,
-      }
-    })
-  }
-
-  searchItems = (e) => {
-    this.setState(({ todos }) => {
-      const newArr = JSON.parse(JSON.stringify(todos))
-      newArr.map((el) => {
-        if (e.target.value.match(/[\w]/)) {
-          if (!el.label.match(e.target.value)) {
-            el.hide = true
-          }
-        } else {
-          el.hide = false
-        }
-      })
-      return {
-        todos: newArr,
-      }
-    })
-  }
-
-  clearComplited = () => {
-    this.setState(({ todos }) => {
-      const result = []
-      const newArr = JSON.parse(JSON.stringify(todos))
-
-      newArr.forEach((el) => {
-        if (!el.done) {
-          result.push(el)
-        }
-      })
-
-      return {
-        todos: result,
-      }
-    })
-  }
-
-  addItems = (text) => {
-    let newItem = this.createItem(text)
-    this.setState(({ todos }) => {
-      let fanArr = JSON.parse(JSON.stringify(todos))
-      const newArr = [...fanArr, newItem]
-      return {
-        todos: newArr,
-      }
-    })
-  }
-  render() {
-    return (
-      <div className="App">
-        <Title />
-        <AddItem addItem={this.addItems} debounce={this.debounce} />
-        <Tasklist
-          todos={this.state.todos}
-          onDeleted={this.deleteItem}
-          makeDone={this.makeDone}
-          makeImportant={this.makeImportant}
-          labelChange={this.onInputChange}
-        />
-        <Deals
-          left={
-            this.state.todos.filter((el) => {
-              return el.done !== true
-            }).length
-          }
-          onActive={this.activeItems}
-          onCompleted={this.completedItems}
-          onAll={this.allItems}
-          todos={this.state}
-          onCelar={this.clearComplited}
-        />
-        <Search searchFn={this.searchItems} />
-      </div>
-    )
-  }
-}
-
-export default App
+import React, { useState } from 'react';import './style.css';import Title from './Components/Title/Title';import Search from './Components/Search/Search';import Tasklist from './Components/Tasklist/Tasklist';import Deals from './Components/Deals/Deals';import AddItem from './Components/AddItem/AddItem';const App = () => {  const debounce = (fn, throttleTime) => {    let timer;    return function (...args) {      clearTimeout(timer);      timer = setTimeout(() => {        fn.apply(this, args);      }, throttleTime);    };  };  const createItem = (state) => {    const { label, min, sec } = state;    return {      label,      min,      sec,      important: false,      done: false,      hide: false,      time: Date.now(),      id: ids++,    };  };  let ids = 0;  const [todos, setTodos] = useState([]);  const onInputChange = (id, label) => {    // setTodos((prev) => {})    setTodos((todos) => {      const newArr = JSON.parse(JSON.stringify(todos));      const result = [];      newArr.forEach((el) => {        if (el.id === id) {          el.label = label;          result.push(el);        } else {          result.push(el);        }      });      return result;    });  };  const makeDone = (id) => {    setTodos((todos) => {      const idx = todos.findIndex((el) => {        return el.id === id;      });      const oldItem = todos[idx];      const newItem = { ...oldItem, done: !oldItem.done };      return [...todos.slice(0, idx), newItem, ...todos.slice(idx + 1)];    });  };  const makeImportant = (id) => {    setTodos((todos) => {      const idx = todos.findIndex((el) => {        return el.id === id;      });      const oldItem = todos[idx];      const newItem = { ...oldItem, important: !oldItem.important };      return [...todos.slice(0, idx), newItem, ...todos.slice(idx + 1)];    });  };  const deleteItem = (id) => {    setTodos((todos) => {      return todos.filter((el) => {        return el.id !== id;      });    });  };  const activeItems = () => {    setTodos((todos) => {      const newArr = JSON.parse(JSON.stringify(todos));      return newArr.map((el) => {        el.hide = false;        if (el.done) {          el.hide = true;        }      });    });  };  const allItems = () => {    setTodos((todos) => {      const newArr = JSON.parse(JSON.stringify(todos));      return newArr.map((el) => {        el.hide = false;      });    });  };  const completedItems = () => {    setTodos((todos) => {      const newArr = JSON.parse(JSON.stringify(todos));      return newArr.map((el) => {        el.hide = false;        if (!el.done) {          el.hide = true;        }      });    });  };  const searchItems = (e) => {    setTodos((todos) => {      const newArr = JSON.parse(JSON.stringify(todos));      return newArr.map((el) => {        if (e.target.value.match(/[\w]/)) {          if (!el.label.match(e.target.value)) {            el.hide = true;          }        } else {          el.hide = false;        }      });    });  };  const clearComplited = () => {    setTodos((todos) => {      const result = [];      const newArr = JSON.parse(JSON.stringify(todos));      newArr.forEach((el) => {        if (!el.done) {          result.push(el);        }      });      return {        result,      };    });  };  const addItems = (state) => {    // const {label : text,min,sec} = state    let newItem = createItem(state);    setTodos((todos) => {      let fanArr = JSON.parse(JSON.stringify(todos));      return [...fanArr, newItem];    });  };  return (    <div className="App">      <Title />      <AddItem addItem={addItems} debounce={debounce} />      <Tasklist        todos={todos}        onDeleted={deleteItem}        makeDone={makeDone}        makeImportant={makeImportant}        labelChange={onInputChange}      />      <Deals        left={          todos.filter((el) => {            return el.done !== true;          }).length        }        onActive={activeItems}        onCompleted={completedItems}        onAll={allItems}        todos={todos}        onCelar={clearComplited}      />      <Search searchFn={searchItems} />    </div>  );};export default App;

@@ -1,96 +1,1 @@
-import React, { Component } from 'react'
-import './Task.css'
-import { formatDistanceToNow } from 'date-fns'
-class Task extends Component {
-  state = {
-    label: '',
-    inputHide: false,
-  }
-
-  hideInput = (e) => {
-    e.preventDefault()
-    this.props.onLabelChange(this.state.label)
-    this.setState(() => {
-      return {
-        inputHide: false,
-      }
-    })
-  }
-  showInput = (e) => {
-    e.preventDefault()
-
-    this.setState(() => {
-      console.log('he')
-
-      return {
-        inputHide: true,
-      }
-    })
-  }
-
-  componentDidMount() {
-    this.setState({
-      label: this.props.label,
-    })
-  }
-
-  render() {
-    const { onDeleted, makeDone, makeImportant, done, important, hide, time } = this.props
-    const { label, inputHide } = this.state
-    let divClass = 'tasklist-item'
-    let textClass = 'tasklist-item__text'
-    let buttonClass = 'tasklist-item__button button__select'
-    let inputClass = 'input2'
-    if (done) {
-      textClass += ' done'
-      buttonClass += ' button--done'
-    }
-    if (important) {
-      textClass += ' important'
-    }
-    if (hide) {
-      divClass += ' hide'
-    }
-    if (!inputHide) {
-      inputClass += ' hide'
-    }
-    return (
-      <div className={divClass}>
-        <form action="" onSubmit={this.hideInput}>
-          <input
-            type="text"
-            className={inputClass}
-            value={this.state.label}
-            onChange={(e) => {
-              this.setState({
-                label: e.target.value,
-              })
-            }}
-            onBlur={this.hideInput}
-          />
-        </form>
-        <label className={'label'} onClick={makeDone}>
-          <button className={buttonClass}></button>
-          <span className={textClass} onClick={makeDone}>
-            {label}
-          </span>
-          <span className={'hello'}>{formatDistanceToNow(time)}</span>
-        </label>
-
-        <div className="buttons">
-          <button className={'tasklist-item__button'}>
-            <span className={'fa fa-pencil'} onClick={this.showInput}></span>
-          </button>
-          <button className={'tasklist-item__button button__important'} onClick={makeImportant}>
-            <span className={'fa fa-star-o'}></span>
-          </button>
-          <button className={'tasklist-item__button button__delete'} onClick={onDeleted}>
-            <span className={'fa fa-trash-o'}></span>
-          </button>
-        </div>
-      </div>
-    )
-  }
-}
-
-export default Task
+import React, {useEffect, useState} from 'react';import './Task.css';import { formatDistanceToNow } from 'date-fns';const Task = (props) => {  const getPadTime = (time) => {    return time.toString().padStart(2, '0');  };  const [label,setLabel] = useState('')  const [inputHide,setInputHide] = useState(false)  const [min,setMin] = useState(getPadTime(props.min))  const [sec,setSec] = useState(getPadTime(props.sec))  const [shouldTimerWork,setShouldTimerWork] = useState(true)  const [timerId,setTimerId] = useState(0)  const hideInput = (e) => {    e.preventDefault();    props.onLabelChange(label);    setInputHide(() => {      return false    });  };  const showInput = (e) => {    e.preventDefault();    setShouldTimerWork(true)    setInputHide(true)  };    useEffect(()=>{      const timer = setTimeout(() => {        console.log('hello2');          if (shouldTimerWork) {              setTimerId(timer)              setMin(sec === '00' && min > 0 ? getPadTime(min - 1) : min)              setSec(sec > 0 ? getPadTime(sec - 1) : min > 0 ? 59 : getPadTime(0))          }      }, 1000);      return (          clearTimeout(timerId)      )    },[min,sec,shouldTimerWork])    const { onDeleted, makeDone, makeImportant, done, important, hide, time } = props;    let divClass = 'tasklist-item';    let textClass = 'tasklist-item__text';    let buttonClass = 'tasklist-item__button button__select';    let inputClass = 'input2';    if (done) {      textClass += ' done';      buttonClass += ' button--done';    }    if (important) {      textClass += ' important';    }    if (hide) {      divClass += ' hide';    }    if (!inputHide) {      inputClass += ' hide';    }    return (      <div className={divClass}>        <form action="" onSubmit={hideInput}>          <input            type="text"            className={inputClass}            value={label}            onChange={(e) => {              setLabel(e.target.value)            }}            onBlur={hideInput}          />        </form>        <label className={'label'} onClick={makeDone}>          <button className={buttonClass}></button>          <div className="test">            <span className={textClass} onClick={makeDone}>              {props.label}            </span>            <span className={'hello'}>{formatDistanceToNow(time)}</span>          </div>          <div className="time-info">            <div className="timer">{`${min}:${sec}`}</div>          </div>        </label>        <div className="buttons">          <button className={'tasklist-item__button'}>            <span className={'fa fa-pencil'} onClick={showInput}></span>          </button>          <button className={'tasklist-item__button button__important'} onClick={makeImportant}>            <span className={'fa fa-star-o'}></span>          </button>          <button className={'tasklist-item__button button__delete'} onClick={onDeleted}>            <span className={'fa fa-trash-o'}></span>          </button>          <button            onClick={() => {              setShouldTimerWork(false)            }}          >            stop          </button>          <button            onClick={() => {              setShouldTimerWork(true)            }}          >            start          </button>        </div>      </div>    );}export default Task;

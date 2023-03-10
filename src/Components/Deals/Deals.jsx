@@ -1,11 +1,10 @@
-import React, { Component } from 'react'
-import './Deals.css'
-class Deals extends Component {
-  render() {
-    const { left, onActive, onCompleted, onAll, onCelar } = this.props
+import React from 'react';
+import './Deals.css';
+const Deals = (props) => {
+    const { left, onActive, onCompleted, onAll, onCelar } = props;
 
-    let defaultFilterBtn = 'filter-button'
-    let defaultFilterBtnAll = 'filter-button'
+    let defaultFilterBtn = 'filter-button';
+    let defaultFilterBtnAll = 'filter-button';
 
     return (
       <div className={'deals'}>
@@ -15,7 +14,7 @@ class Deals extends Component {
           <span
             className={defaultFilterBtnAll}
             onClick={() => {
-              onAll()
+              onAll();
             }}
           >
             All
@@ -23,7 +22,7 @@ class Deals extends Component {
         </label>
         <label
           onClick={() => {
-            onActive()
+            onActive();
           }}
         >
           <input type={'radio'} className={'radio-button'} name={'selector'} />
@@ -31,7 +30,7 @@ class Deals extends Component {
         </label>
         <label
           onClick={() => {
-            onCompleted()
+            onCompleted();
           }}
         >
           <input type={'radio'} className={'radio-button'} name={'selector'} />
@@ -40,14 +39,13 @@ class Deals extends Component {
         <label
           className={'clear'}
           onClick={() => {
-            onCelar()
+            onCelar();
           }}
         >
           <button className={'button clear'}>Clear</button>
         </label>
       </div>
-    )
-  }
+    );
 }
 
-export default Deals
+export default Deals;
